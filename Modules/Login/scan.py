@@ -7,6 +7,14 @@ import threading
 # Global list to store background tasks
 BACKGROUND_TASK = []
 
+def ensure_saved_directory():
+    """
+    Ensures that the SAVED directory exists.
+    """
+    global SAVED_DIR
+    SAVED_DIR = "SAVED"  # Define the SAVED directory globally
+    os.makedirs(SAVED_DIR, exist_ok=True)  # Create the directory if it doesn't exist
+
 def check_nmap():
     try:
         subprocess.run(["nmap", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
@@ -32,9 +40,12 @@ def install_nmap():
 
 def scan_ports(target_ip, box_name):
     check_nmap()  # Ensure nmap is installed
+    ensure_saved_directory()  # Ensure SAVED directory exists
+
     print(f"Scanning {target_ip} for open ports (Fast scan)...")
     try:
-        os.makedirs(box_name, exist_ok=True)  # Create folder for box results
+        box_path = os.path.join(SAVED_DIR, box_name)
+        os.makedirs(box_path, exist_ok=True)  # Create folder for box results
 
         # Run Nmap to quickly scan the top 1000 ports
         result = subprocess.run(
@@ -50,6 +61,12 @@ def scan_ports(target_ip, box_name):
                 port = line.split("/")[0]
                 open_ports.append(port)
         print(f"Open Ports: {', '.join(open_ports)}")
+
+        # Save the quick scan results
+        quick_scan_file = os.path.join(box_path, f"{target_ip}-quick.txt")
+        with open(quick_scan_file, "w") as file:
+            file.write(output)
+        print(f"Quick scan results saved to {quick_scan_file}")
         
         # Add detailed Nmap scan to background tasks
         BACKGROUND_TASK.append(f"Nmap -sVC {target_ip}")
@@ -67,11 +84,14 @@ def scan_ports(target_ip, box_name):
 
 def detailed_scan(target_ip, box_name):
     current_date = datetime.now().strftime("%Y-%m-%d")
-    output_file_base = os.path.join(box_name, f"{target_ip}-{current_date}")
+    box_path = os.path.join(SAVED_DIR, box_name)
+    os.makedirs(box_path, exist_ok=True)
+    output_file_base = os.path.join(box_path, f"{target_ip}-{current_date}")
     try:
         subprocess.run(
             ["nmap", "-sVC", target_ip, "-oA", output_file_base], check=True
         )
+        print(f"Detailed scan results saved to {output_file_base}.nmap/.xml/.gnmap")
     except subprocess.CalledProcessError as e:
         print(f"Error running detailed Nmap scan: {e}")
 
@@ -80,10 +100,15 @@ def run_gobuster(target_ip):
     Run Gobuster for ports 80 or 443.
     :param target_ip: The target IP address.
     """
+    ensure_saved_directory()  # Ensure SAVED directory exists
     try:
-        subprocess.run(
-            ["gobuster", "dir", "-u", f"http://{target_ip}", "-w", "/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt"],
-            check=True,
-        )
+        gobuster_file = os.path.join(SAVED_DIR, f"{target_ip}-gobuster.txt")
+        with open(gobuster_file, "w") as file:
+            subprocess.run(
+                ["gobuster", "dir", "-u", f"http://{target_ip}", "-w", "/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt"],
+                stdout=file,
+                check=True,
+            )
+        print(f"Gobuster results saved to {gobuster_file}")
     except subprocess.CalledProcessError as e:
         print(f"Error running Gobuster: {e}")
