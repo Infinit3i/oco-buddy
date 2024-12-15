@@ -31,6 +31,7 @@ pip install -r requirements.txt
 - highlight important sections
 - automatic some scripts to work in the background
 - have the emojis work on all systems
+- create proper quality testing
 
 
 
