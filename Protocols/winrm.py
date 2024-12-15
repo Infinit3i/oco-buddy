@@ -1,16 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def winrm_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Test WinRM Connectivity with Test-WSMan", "function": test_wsman},
-        "2": {"description": "Execute Command with Invoke-Command", "function": execute_command_with_invoke_command},
-        "3": {"description": "Establish a Reverse Shell", "function": establish_reverse_shell},
-        "4": {"description": "Connect Using evil-winrm", "function": connect_with_evil_winrm},
-        "5": {"description": "Crack WinRM Credentials with Hydra", "function": brute_force_winrm_with_hydra},
-        "6": {"description": "HackTricks Reference", "function": show_hacktricks_reference},
-    }
-    build_submenu("WinRM Enumeration", target_ip, actions, open_ports)
-
 def test_wsman(target_ip, open_ports):
     title = "Test WinRM Connectivity"
     content = f"Test-WSMan {target_ip}"

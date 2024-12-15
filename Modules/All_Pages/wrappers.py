@@ -1,5 +1,6 @@
 import subprocess
 from colorama import Fore, Style
+import inspect
 
 from Assets.ascii_text_prompts import ascii_art, full_ascii_art, infinitei
 from Modules.All_Pages.clear_screen import clear_screen
@@ -22,14 +23,36 @@ def display_background_task():
 
 def header(target_ip, open_ports):
     clear_screen()
-    print(center_text(ascii_art))
+    print(center_text("Protocol Enumeration"))
     print(center_text(get_random_tip_with_color()) + "\n")
     print(center_text(f"Target IP: {target_ip}\n"))
     if open_ports:
         print(center_text(f"Open Ports: {', '.join(open_ports)}\n"))
     else:
         print(center_text("Open Ports: None\n"))
-    display_background_task() # Include the background tasks section
+
+def build_dynamic_submenu(module, target_ip, open_ports):
+    actions = {}
+    for name, func in inspect.getmembers(module, inspect.isfunction):
+        if func.__module__ == module.__name__:  # Ensure it's defined in the given module
+            actions[name] = func
+
+    while True:
+        header(target_ip, open_ports)
+        print("Available Actions:")
+        for idx, (name, func) in enumerate(actions.items(), start=1):
+            print(f"[{idx}] {name.replace('_', ' ').title()}")
+        print("[0] Back to Main Menu\n")
+
+        # Menu selection
+        choice = input("Select an option: ").strip()
+        if choice == "0":
+            break
+        elif choice.isdigit() and 1 <= int(choice) <= len(actions):
+            selected_func = list(actions.values())[int(choice) - 1]
+            selected_func(target_ip, open_ports)  # Call the selected function
+        else:
+            print(f"{Fore.RED}Invalid choice. Please try again.{Style.RESET_ALL}")
 
 
 

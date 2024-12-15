@@ -1,19 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def rpc_smb_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Enumerate Vulnerabilities with Nmap", "function": run_nmap_smb_scripts},
-        "2": {"description": "List SMB Shares with smbclient", "function": list_smb_shares},
-        "3": {"description": "Enumerate with enum4linux", "function": run_enum4linux},
-        "4": {"description": "Enumerate with rpcclient", "function": run_rpcclient_commands},
-        "5": {"description": "Brute-Force SMB Login with Hydra", "function": brute_force_smb_hydra},
-        "6": {"description": "Use CrackMapExec for Enumeration", "function": run_crackmapexec_smb},
-        "7": {"description": "Exploit SMB with Metasploit", "function": exploit_smb_metasploit},
-        "8": {"description": "Dump SAM Hashes with samrdump", "function": dump_sam_hashes},
-        "9": {"description": "HackTricks Reference", "function": show_hacktricks_reference},
-    }
-    build_submenu("RPC/SMB Enumeration", target_ip, actions, open_ports)
-
 def run_nmap_smb_scripts(target_ip, open_ports):
     title = "Nmap SMB Scripts"
     content = (

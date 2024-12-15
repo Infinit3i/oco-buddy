@@ -1,17 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def oracle_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Check Version with tnscmd10g", "function": run_tnscmd_version},
-        "2": {"description": "Check Status with tnscmd10g", "function": run_tnscmd_status},
-        "3": {"description": "Enumerate with Nmap Scripts", "function": run_nmap_oracle_scripts},
-        "4": {"description": "Test Default Credentials with Metasploit", "function": test_default_credentials},
-        "5": {"description": "Enumerate SID with ODAT (Oracle Database Attacking Tool)", "function": enumerate_sid_with_odat},
-        "6": {"description": "Brute-Force Login with ODAT", "function": brute_force_oracle_odat},
-        "7": {"description": "HackTricks Reference", "function": show_hacktricks_reference},
-    }
-    build_submenu("Oracle Enumeration", target_ip, actions, open_ports)
-
 def run_tnscmd_version(target_ip, open_ports):
     title = "Check Version with tnscmd10g"
     content = f"tnscmd10g version -h {target_ip}"

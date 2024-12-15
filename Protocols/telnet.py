@@ -1,16 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def telnet_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Check Telnet Banner", "function": check_banner},
-        "2": {"description": "Attempt Anonymous Login", "function": attempt_anonymous_login},
-        "3": {"description": "Brute-Force Credentials", "function": brute_force_credentials},
-        "4": {"description": "Test for Command Execution", "function": test_command_execution},
-        "5": {"description": "Enumerate Telnet Services", "function": enumerate_telnet_services},
-        "6": {"description": "Exploit Telnet Vulnerabilities", "function": exploit_telnet_vulnerabilities},
-    }
-    build_submenu("Telnet Enumeration", target_ip, actions, open_ports)
-
 def check_banner(target_ip, open_ports):
     title = "Check Telnet Banner"
     content = (

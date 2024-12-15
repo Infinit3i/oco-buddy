@@ -1,16 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def dns_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Run dig", "function": run_dig},
-        "2": {"description": "Run nslookup", "function": run_nslookup},
-        "3": {"description": "Enumerate DNS zone (zone transfer)", "function": run_zone_transfer},
-        "4": {"description": "Test subdomain brute-forcing with gobuster", "function": run_gobuster_dns},
-        "5": {"description": "Enumerate with dnsrecon", "function": run_dnsrecon},
-        "6": {"description": "Enumerate with fierce", "function": run_fierce},
-    }
-    build_submenu("DNS Enumeration", target_ip, actions, open_ports)
-
 def run_dig(target_ip, open_ports):
     title = "dig"
     content = f"dig {target_ip}"

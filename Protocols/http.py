@@ -1,20 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def http_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Run WhatWeb", "function": run_whatweb},
-        "2": {"description": "Run Gobuster", "function": run_gobuster},
-        "3": {"description": "Run Dirb", "function": run_dirb},
-        "4": {"description": "Run Nikto", "function": run_nikto},
-        "5": {"description": "Run CEWL", "function": run_cewl},
-        "6": {"description": "Run Dep-scan", "function": run_dep_scan},
-        "7": {"description": "Run Davtest", "function": run_davtest},
-        "8": {"description": "Run WPScan", "function": run_wpscan},
-        "9": {"description": "Run Arjun", "function": run_arjun},
-        "10": {"description": "Run Waybackurls", "function": run_waybackurls},
-    }
-    build_submenu("HTTP Enumeration", target_ip, actions, open_ports)
-
 def run_whatweb(target_ip, open_ports):
     title = "WhatWeb"
     content = f"whatweb -a3 http://{target_ip} -v"

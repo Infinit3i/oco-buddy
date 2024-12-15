@@ -1,15 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def mongodb_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Check for Open MongoDB Instances", "function": check_open_instances},
-        "2": {"description": "List Databases", "function": list_databases},
-        "3": {"description": "Dump Collections", "function": dump_collections},
-        "4": {"description": "Check for Authentication Bypass", "function": check_authentication_bypass},
-        "5": {"description": "Test for MongoDB RCE Exploit", "function": test_rce_exploit},
-    }
-    build_submenu("MongoDB Enumeration", target_ip, actions, open_ports)
-
 def check_open_instances(target_ip, open_ports):
     title = "Check for Open MongoDB Instances"
     content = f"nmap -p 27017 --script mongodb-info {target_ip}"

@@ -1,15 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def ldap_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Enumerate LDAP with ldapsearch", "function": run_ldapsearch},
-        "2": {"description": "Enumerate LDAP with windapsearch", "function": run_windapsearch},
-        "3": {"description": "Enumerate LDAP with ldapdomaindump", "function": run_ldapdomaindump},
-        "4": {"description": "Use Nmap Scripts for LDAP", "function": run_nmap_ldap},
-        "5": {"description": "HackTricks Reference", "function": show_hacktricks_reference},
-    }
-    build_submenu("LDAP Enumeration", target_ip, actions, open_ports)
-
 def run_ldapsearch(target_ip, open_ports):
     title = "ldapsearch"
     content = (

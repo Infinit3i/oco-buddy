@@ -1,15 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def pop3_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Manual Enumeration via Telnet", "function": manual_pop3_enumeration},
-        "2": {"description": "Enumerate with Nmap Scripts", "function": run_nmap_pop3_scripts},
-        "3": {"description": "Brute-Force Login with Hydra", "function": run_hydra_pop3},
-        "4": {"description": "Test for Weak Passwords", "function": test_weak_passwords},
-        "5": {"description": "HackTricks Reference", "function": show_hacktricks_reference},
-    }
-    build_submenu("POP3 Enumeration", target_ip, actions, open_ports)
-
 def manual_pop3_enumeration(target_ip, open_ports):
     title = "Manual POP3 Enumeration via Telnet"
     content = (

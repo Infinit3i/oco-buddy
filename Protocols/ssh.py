@@ -1,17 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def ssh_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Find files owned by specific user", "function": find_user_files},
-        "2": {"description": "Find 'root.txt' file", "function": find_root_file},
-        "3": {"description": "List SETUID/SETGID files", "function": list_setuid_files},
-        "4": {"description": "Check writable config files", "function": check_writable_files},
-        "5": {"description": "Grep for passwords in /etc/", "function": grep_passwords},
-        "6": {"description": "Run LinEnum.sh", "function": lin_enum},
-    }
-    build_submenu("SSH Enumeration", target_ip, actions, open_ports)
-
-
 def find_user_files(target_ip, open_ports):
     title = "Find Files Owned by User"
     content = f"find / -uid <USER UUID> -type f -ls 2>/dev/null | grep -v '/proc*'"

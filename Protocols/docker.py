@@ -1,15 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def docker_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Check for Open Docker Instances", "function": check_open_docker},
-        "2": {"description": "Enumerate Docker Containers", "function": enumerate_containers},
-        "3": {"description": "Enumerate Docker Images", "function": enumerate_images},
-        "4": {"description": "Test Docker Privilege Escalation", "function": test_privilege_escalation},
-        "5": {"description": "Upload and Execute Payload in Container", "function": upload_and_execute_payload},
-    }
-    build_submenu("Docker Enumeration", target_ip, actions, open_ports)
-
 def check_open_docker(target_ip, open_ports):
     title = "Check for Open Docker Instances"
     content = f"nmap -p 2375 --script docker-version {target_ip}"

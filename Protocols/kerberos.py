@@ -1,16 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def kerberos_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Enumerate SPNs with GetUserSPNs.py", "function": run_getuserspns},
-        "2": {"description": "Request TGT with GetTGT.py", "function": run_gettgt},
-        "3": {"description": "Enumerate Kerberos Tickets with Rubeus", "function": run_rubeus},
-        "4": {"description": "AS-REP Roasting with Impacket", "function": run_asrep_roasting},
-        "5": {"description": "Kerbrute Brute-Force", "function": run_kerbrute},
-        "6": {"description": "HackTricks Reference", "function": show_hacktricks_reference},
-    }
-    build_submenu("Kerberos Enumeration", target_ip, actions, open_ports)
-
 def run_getuserspns(target_ip, open_ports):
     title = "GetUserSPNs.py"
     content = (

@@ -1,18 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def ftp_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Nmap FTP Scripts", "function": run_nmap_ftp_scripts},
-        "2": {"description": "FTP Version Scan with Nmap", "function": run_nmap_version_scan},
-        "3": {"description": "Test Anonymous Login", "function": test_anonymous_login},
-        "4": {"description": "Manual FTP Enumeration", "function": manual_ftp_enumeration},
-        "5": {"description": "FTP Brute-Force with Hydra", "function": run_hydra_ftp},
-        "6": {"description": "FTP Brute-Force with Medusa", "function": run_medusa_ftp},
-        "7": {"description": "Enumerate FTP Files with curlftpfs", "function": enumerate_ftp_files_curlftpfs},
-        "8": {"description": "HackTricks Reference", "function": show_hacktricks_reference},
-    }
-    build_submenu("FTP Enumeration", target_ip, actions, open_ports)
-
 def run_nmap_ftp_scripts(target_ip, open_ports):
     title = "Nmap FTP Scripts"
     content = (

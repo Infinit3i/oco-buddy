@@ -1,15 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def mssql_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Check for Open MSSQL Instances", "function": check_open_instances},
-        "2": {"description": "List Databases", "function": list_databases},
-        "3": {"description": "Execute SQL Query", "function": execute_sql_query},
-        "4": {"description": "Brute-force MSSQL Login", "function": brute_force_login},
-        "5": {"description": "Test for MSSQL RCE Exploit", "function": test_rce_exploit},
-    }
-    build_submenu("MSSQL Enumeration", target_ip, actions, open_ports)
-
 def check_open_instances(target_ip, open_ports):
     title = "Check for Open MSSQL Instances"
     content = f"nmap -p 1433 --script ms-sql-info {target_ip}"

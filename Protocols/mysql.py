@@ -1,17 +1,5 @@
 from Modules.Imports.protocol_imports import *
 
-def mysql_submenu(target_ip, open_ports):
-    actions = {
-        "1": {"description": "Enumerate MySQL with Nmap", "function": run_nmap_mysql_scripts},
-        "2": {"description": "Check for Empty Passwords", "function": check_empty_passwords},
-        "3": {"description": "Enumerate Databases and Users with mysql-client", "function": enumerate_mysql_databases_users},
-        "4": {"description": "Test Default Credentials", "function": test_default_credentials},
-        "5": {"description": "Perform SQL Dump with sqlmap", "function": run_sqlmap},
-        "6": {"description": "Brute-Force MySQL with Hydra", "function": run_hydra_mysql},
-        "7": {"description": "HackTricks Reference", "function": show_hacktricks_reference},
-    }
-    build_submenu("MySQL Enumeration", target_ip, actions, open_ports)
-
 def run_nmap_mysql_scripts(target_ip, open_ports):
     title = "Nmap MySQL Scripts"
     content = (
