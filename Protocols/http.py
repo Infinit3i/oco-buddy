@@ -11,7 +11,6 @@ def run_feroxbuster(target_ip, open_ports):
     run_command(title, content, target_ip, open_ports)
     
 def run_skipfish(target_ip, open_ports):
-    """Run Skipfish for web application security scanning."""
     title = "Skipfish"
     content = f"skipfish -k 00:06:00 -o doctorScan/ http://{target_ip}/"
     run_command(title, content, target_ip, open_ports)

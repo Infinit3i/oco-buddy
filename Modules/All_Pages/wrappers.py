@@ -132,15 +132,23 @@ def global_command_handler():
 
 def display_protocol_menu(target_ip, open_ports, menu_options, box_name):
     """
-    Displays the protocol menu dynamically and loads the appropriate submenu.
+    Displays the protocol menu dynamically and highlights protocols with detected open ports.
     Passes the box_name for saving progress and results.
     """
     while True:
         header(target_ip, open_ports)
         print("\n=== MAIN Menu ===")
+        
         for key, option in menu_options.items():
-            protocol_ports = "/".join(option["ports"])
-            print(f"[{key}] {option['name'].upper()} (Ports: {protocol_ports})")
+            # Highlight the line if any of the protocol's ports are open
+            protocol_ports = option["ports"]
+            is_open = any(port in open_ports for port in protocol_ports)
+            
+            line_color = Fore.GREEN if is_open else Style.RESET_ALL
+            detected_ports = "/".join([highlight_ports(port, open_ports) for port in protocol_ports])
+            
+            print(f"{line_color}[{key}] {option['name'].upper()} (Ports: {detected_ports}){Style.RESET_ALL}")
+        
         print("[0] Exit\n")
 
         choice = input("Select a protocol: ").strip()
