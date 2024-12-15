@@ -1,4 +1,4 @@
-from Modules.All_Pages.utils import display_protocol_menu
+from Modules.All_Pages.wrappers import display_protocol_menu
 
 # Global variable to store open ports
 OPEN_PORTS = []

@@ -72,11 +72,6 @@ def scan_ports(target_ip, box_name):
         BACKGROUND_TASK.append(f"Nmap -sVC {target_ip}")
         threading.Thread(target=detailed_scan, args=(target_ip, box_name), daemon=True).start()
 
-        # Check for web ports and start Gobuster if necessary
-        if "80" in open_ports or "443" in open_ports:
-            BACKGROUND_TASK.append(f"Gobuster http://{target_ip}")
-            threading.Thread(target=run_gobuster, args=(target_ip,), daemon=True).start()
-
         return open_ports
     except subprocess.CalledProcessError as e:
         print(f"Error running Nmap: {e.stderr}")
@@ -94,21 +89,3 @@ def detailed_scan(target_ip, box_name):
         print(f"Detailed scan results saved to {output_file_base}.nmap/.xml/.gnmap")
     except subprocess.CalledProcessError as e:
         print(f"Error running detailed Nmap scan: {e}")
-
-def run_gobuster(target_ip):
-    """
-    Run Gobuster for ports 80 or 443.
-    :param target_ip: The target IP address.
-    """
-    ensure_saved_directory()  # Ensure SAVED directory exists
-    try:
-        gobuster_file = os.path.join(SAVED_DIR, f"{target_ip}-gobuster.txt")
-        with open(gobuster_file, "w") as file:
-            subprocess.run(
-                ["gobuster", "dir", "-u", f"http://{target_ip}", "-w", "/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt"],
-                stdout=file,
-                check=True,
-            )
-        print(f"Gobuster results saved to {gobuster_file}")
-    except subprocess.CalledProcessError as e:
-        print(f"Error running Gobuster: {e}")
