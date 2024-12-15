@@ -88,21 +88,55 @@ def build_dynamic_submenu(module, target_ip, open_ports, box_name):
             print(f"{Fore.RED}Invalid choice. Please try again.{Style.RESET_ALL}")
 
 
-def run_command(title, content, target_ip, open_ports):
-    header(target_ip, open_ports)  # Display the header at the top
+def run_command(title, content, target_ip, open_ports, box_name):
+    """
+    Executes a shell command, prints the output to the screen, and saves it to a file in the appropriate directory.
+    :param title: Title of the command/task.
+    :param content: Shell command to execute.
+    :param target_ip: Target IP address.
+    :param open_ports: List of open ports for reference.
+    :param box_name: Directory where the results are saved.
+    """
+    # Define the output directory and file
+    box_dir = os.path.join("SAVED", box_name)
+    ensure_directory_exists(box_dir)
+    output_file = os.path.join(box_dir, f"{title.replace(' ', '_').lower()}_output.txt")
+
+    # Display the header
+    header(target_ip, open_ports)
     print(f"=== {title} ===")
     print(f"Executing: {content}\n")
 
     try:
-        subprocess.run(content, shell=True, check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"{Fore.RED}Error executing command: {e}{Style.RESET_ALL}")
-    except FileNotFoundError:
-        print(f"{Fore.RED}Command not found: {content.split()[0]}{Style.RESET_ALL}")
+        # Execute the command and capture the output
+        result = subprocess.run(content, shell=True, text=True, capture_output=True)
+        
+        # Print and save the output
+        if result.stdout:
+            print(f"{Fore.GREEN}{result.stdout}{Style.RESET_ALL}")
+            with open(output_file, "w") as f:
+                f.write(result.stdout)
+        
+        # Print and save errors if they occur
+        if result.stderr:
+            print(f"{Fore.RED}Error:\n{result.stderr}{Style.RESET_ALL}")
+            with open(output_file, "a") as f:
+                f.write("\n--- Errors ---\n")
+                f.write(result.stderr)
+        
+        # Check the return code for success/failure
+        if result.returncode != 0:
+            print(f"{Fore.RED}Command failed with exit code {result.returncode}.{Style.RESET_ALL}")
+
     except Exception as ex:
+        # Handle unexpected errors
         print(f"{Fore.RED}An unexpected error occurred: {ex}{Style.RESET_ALL}")
+        with open(output_file, "a") as f:
+            f.write(f"\n--- Unexpected Error ---\n{str(ex)}")
     finally:
+        print(f"\nOutput saved to: {output_file}")
         input("\nPress Enter to return...")
+
 
 def global_command_handler():
     """
