@@ -9,13 +9,16 @@ Offensive Cyber Security Buddy to help with offensive cyber security.
 
 ## DIRECTIONS
 
+
+# On Windows
 ```
-1a. # On Windows
 .\venv\Scripts\activate
+```
 
-1b. # On macOS/Linux
-source venv/bin/activate
 
-2. # Install requirements
+# On macOS/Linux
+```
+python3 -m venv oco
+source oco/bin/activate
 pip install -r requirements.txt
 ```
