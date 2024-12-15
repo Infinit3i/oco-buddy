@@ -4,6 +4,11 @@ def run_whatweb(target_ip, open_ports):
     title = "WhatWeb"
     content = f"whatweb -a3 http://{target_ip} -v"
     run_command(title, content, target_ip, open_ports)
+    
+def run_feroxbuster(target_ip, open_ports):
+    title = "Feroxbuster"
+    content = f"feroxbuster -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 --silent\n"
+    run_command(title, content, target_ip, open_ports)
 
 def run_gobuster(target_ip, open_ports):
     title = "Gobuster"
@@ -55,7 +60,3 @@ def run_waybackurls(target_ip, open_ports):
     content = f"echo http://{target_ip} | waybackurls"
     run_command(title, content, target_ip, open_ports)
 
-def run_feroxbuster(target_ip, open_ports):
-    title = "Feroxbuster"
-    content = f"feroxbuster -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 --silent\n"
-    run_command(title, content, target_ip, open_ports)
