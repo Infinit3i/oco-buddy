@@ -69,3 +69,8 @@ def run_waybackurls(target_ip, open_ports):
     title = "Waybackurls"
     content = f"echo http://{target_ip} | waybackurls"
     run_command(title, content, target_ip, open_ports)
+
+def run_feroxbuster(target_ip, open_ports):
+    title = "Feroxbuster"
+    content = f"feroxbuster -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 --silent\n"
+    run_command(title, content, target_ip, open_ports)
