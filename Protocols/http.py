@@ -7,17 +7,18 @@ def run_whatweb(target_ip, open_ports):
     
 def run_feroxbuster(target_ip, open_ports):
     title = "Feroxbuster"
-    content = f"feroxbuster -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 --silent\n"
+    content = f"feroxbuster -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 --silent"
+    run_command(title, content, target_ip, open_ports)
+    
+def run_skipfish(target_ip, open_ports):
+    """Run Skipfish for web application security scanning."""
+    title = "Skipfish"
+    content = f"skipfish -k 00:06:00 -o doctorScan/ http://{target_ip}/"
     run_command(title, content, target_ip, open_ports)
 
 def run_gobuster(target_ip, open_ports):
     title = "Gobuster"
-    content = (
-        f"1. gobuster dir -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-small.txt\n"
-        f"2. gobuster dir -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -x php,php3,html,txt -t 100 -k --no-error\n"
-        f"3. gobuster dir -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 30 --timeout 1m --no-error\n"
-        f"4. gobuster vhost -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt --append-domain -r -t 40 --no-error | grep \"Status: 200\""
-    )
+    content = f"1. gobuster dir -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-small.txt"
     run_command(title, content, target_ip, open_ports)
 
 def run_dirb(target_ip, open_ports):
