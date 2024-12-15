@@ -8,14 +8,9 @@ from Modules.All_Pages.random_tip import get_random_tip_with_color
 from Modules.All_Pages.center_text import *
 
 from Modules.Login.scan import BACKGROUND_TASK
-from Modules.Login.check_ip import get_target_ip
-
-
 
 def highlight_ports(port, open_ports): # Highlight a port if it is in the list of open ports.
     return f"{Fore.GREEN}{port}{Style.RESET_ALL}" if port in open_ports else f"{port}" 
-
-
 
 def display_background_task():
     if BACKGROUND_TASK:
@@ -24,8 +19,6 @@ def display_background_task():
             print(f"  - {task}")
     else:
         print("\nBackground Task: None")
-
-
 
 def header(target_ip, open_ports):
     clear_screen()
@@ -47,18 +40,26 @@ def display_menu(menu_options, open_ports, target_ip):
         for key, value in menu_options.items():
             ports = "/".join([highlight_ports(port, open_ports) for port in value["ports"]])
             print(f"[{key}] {value['name'].upper()}: Ports {ports}")
+        print("[C] Type Commands")
         print("[0] Logout\n")
 
         choice = input("Enter your choice: ").strip().lower()
 
+        # Handle global command input
+        if choice == "c":
+            global_command_handler()
+
         # Match the choice to a menu option
-        if choice in menu_options:
+        elif choice in menu_options:
             menu_options[choice]["submenu"](target_ip, open_ports)  # Pass arguments directly
+
+        # Handle exit options
         elif choice in ["0", "q", "exit", "quit"]:
             print("Logging out...")
             break
+
         else:
-            print("Invalid choice. Please try again.")
+            print(f"{Fore.RED}Invalid choice. Please try again.{Style.RESET_ALL}")
 
 
 
@@ -66,10 +67,6 @@ def run_command(title, content, target_ip, open_ports):
     header(target_ip, open_ports)  # Display the header at the top
     print("=" * 40)
     print(f"{title.center(40)}")
-    print("=" * 40)
-    print("\n")
-    print("Executing Command:\n")
-    print(content)
     print("\n")
 
     try:
@@ -81,3 +78,17 @@ def run_command(title, content, target_ip, open_ports):
         print(f"An unexpected error occurred: {ex}")
     finally:
         input("\nPress Enter to return...")
+        
+def global_command_handler():
+    print("\nEntering Command Mode (type 'exit' to return to the menu)\n")
+    while True:
+        command = input(f"{Fore.YELLOW}Command > {Style.RESET_ALL}").strip()
+        if command.lower() in ["exit", "quit"]:
+            print("Exiting Command Mode...")
+            break
+        try:
+            result = subprocess.run(command, shell=True, text=True, capture_output=True)
+            if result.stderr:
+                print(f"{Fore.RED}Error:\n{result.stderr}{Style.RESET_ALL}")
+        except Exception as ex:
+            print(f"{Fore.RED}An error occurred: {ex}{Style.RESET_ALL}")
