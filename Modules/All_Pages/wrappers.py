@@ -77,17 +77,17 @@ def build_dynamic_submenu(module, target_ip, open_ports):
 
 def run_command(title, content, target_ip, open_ports):
     header(target_ip, open_ports)  # Display the header at the top
-    print("=" * 40)
-    print(f"{title.center(40)}")
-    print("\n")
+    print(f"=== {title} ===")
+    print(f"Executing: {content}\n")
 
     try:
-        # Execute the command and display its output in real-time
         subprocess.run(content, shell=True, check=True)
     except subprocess.CalledProcessError as e:
-        print(f"Error executing command:\n{e}")
+        print(f"{Fore.RED}Error executing command: {e}{Style.RESET_ALL}")
+    except FileNotFoundError:
+        print(f"{Fore.RED}Command not found: {content.split()[0]}{Style.RESET_ALL}")
     except Exception as ex:
-        print(f"An unexpected error occurred: {ex}")
+        print(f"{Fore.RED}An unexpected error occurred: {ex}{Style.RESET_ALL}")
     finally:
         input("\nPress Enter to return...")
 
