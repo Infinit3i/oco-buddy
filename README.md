@@ -22,3 +22,11 @@ python3 -m venv oco
 source oco/bin/activate
 pip install -r requirements.txt
 ```
+
+
+
+## TODO
+
+- load all sessions
+- date the sessions
+- highlight important sections
