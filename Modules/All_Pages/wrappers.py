@@ -2,14 +2,21 @@ import subprocess
 from colorama import Fore, Style
 import inspect
 import importlib
+import os
 
-from Assets.ascii_text_prompts import ascii_art, full_ascii_art, infinitei
+from Assets.ascii_text_prompts import ascii_art
+from Modules.All_Pages.utils import ensure_directory_exists, save_action_status, load_action_status
 from Modules.All_Pages.clear_screen import clear_screen
 from Modules.All_Pages.random_tip import get_random_tip_with_color
+from Modules.Login.check_ip import get_box_name
 
 from Modules.All_Pages.center_text import *
 
 from Modules.Login.scan import BACKGROUND_TASK
+
+
+
+
 
 def highlight_ports(port, open_ports): # Highlight a port if it is in the list of open ports.
     return f"{Fore.GREEN}{port}{Style.RESET_ALL}" if port in open_ports else f"{port}" 
@@ -32,12 +39,15 @@ def header(target_ip, open_ports):
     else:
         print(center_text("Open Ports: None\n"))
 
-def build_dynamic_submenu(module, target_ip, open_ports):
+def build_dynamic_submenu(module, target_ip, open_ports, box_name):
+    # Box directory setup
+    box_dir = os.path.join("SAVED", box_name)
+    ensure_directory_exists(box_dir)
+
     # Extract all functions in the original order of definition
     source = inspect.getsource(module)
     lines = source.splitlines()
     actions = {}
-    
     # Find all function definitions in order
     for line in lines:
         if line.strip().startswith("def "):  # Identify function definitions
@@ -46,8 +56,9 @@ def build_dynamic_submenu(module, target_ip, open_ports):
             if func and inspect.isfunction(func):
                 actions[func_name] = func
 
-    # Initialize action status tracker
-    action_status = {key: False for key in actions}
+    # Load saved action status or initialize a new one
+    action_status_file = os.path.join(box_dir, f"{module.__name__.split('.')[-1]}_status.json")
+    action_status = load_action_status(action_status_file, default={key: False for key in actions})
 
     while True:
         # Display submenu header
@@ -64,6 +75,8 @@ def build_dynamic_submenu(module, target_ip, open_ports):
         # Menu selection
         choice = input("Select an option: ").strip().lower()
         if choice == "0":
+            # Save action status before exiting
+            save_action_status(action_status_file, action_status)
             break
         elif choice == "c":
             global_command_handler()
@@ -117,7 +130,11 @@ def global_command_handler():
             print(f"{Fore.RED}An unexpected error occurred: {ex}{Style.RESET_ALL}")
 
 
-def display_protocol_menu(target_ip, open_ports, menu_options):
+def display_protocol_menu(target_ip, open_ports, menu_options, box_name):
+    """
+    Displays the protocol menu dynamically and loads the appropriate submenu.
+    Passes the box_name for saving progress and results.
+    """
     while True:
         header(target_ip, open_ports)
         print("\n=== MAIN Menu ===")
@@ -132,15 +149,19 @@ def display_protocol_menu(target_ip, open_ports, menu_options):
             break
         elif choice in menu_options:
             protocol = menu_options[choice]["name"]
-            load_and_run_protocol(protocol, target_ip, open_ports)
+            load_and_run_protocol(protocol, target_ip, open_ports, box_name)
         else:
-            print("Invalid choice. Please try again.")
+            print(f"{Fore.RED}Invalid choice. Please try again.{Style.RESET_ALL}")
 
-def load_and_run_protocol(protocol, target_ip, open_ports):
+def load_and_run_protocol(protocol, target_ip, open_ports, box_name):
+    """
+    Dynamically loads and runs the protocol's module and submenu.
+    Passes the box_name to preserve state and save results.
+    """
     try:
         # Import the protocol module dynamically
         module = importlib.import_module(f"Protocols.{protocol}")
-        build_dynamic_submenu(module, target_ip, open_ports)
+        build_dynamic_submenu(module, target_ip, open_ports, box_name)
     except ModuleNotFoundError:
         print(f"{Fore.RED}Error: Protocol module '{protocol}' not found.{Style.RESET_ALL}")
     except Exception as ex:

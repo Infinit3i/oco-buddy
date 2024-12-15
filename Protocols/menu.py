@@ -25,5 +25,5 @@ MENU_OPTIONS = {
 }
 
 # Expose the main protocol menu function
-def protocol_menu(target_ip, open_ports):
-    display_protocol_menu(target_ip, open_ports, MENU_OPTIONS)
+def protocol_menu(target_ip, open_ports, box_name):
+    display_protocol_menu(target_ip, open_ports, MENU_OPTIONS, box_name)
