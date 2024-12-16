@@ -6,4 +6,4 @@ if __name__ == "__main__":
     target_ip = get_target_ip()
     if target_ip:
         OPEN_PORTS = scan_ports(target_ip, box_name)
-        protocol_menu(target_ip, OPEN_PORTS, box_name)
+        protocol_menu(target_ip, OPEN_PORTS)
