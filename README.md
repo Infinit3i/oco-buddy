@@ -31,10 +31,9 @@ pip install -r requirements.txt
 3. date the sessions
 4. automatic some scripts to work in the background
 5. have the emojis work on all systems
-6. make readme look more professional
-7. add 30 boxes
-8. make readme more professional
-9. release on linkedin, and website
+6. add 30 boxes
+7. make readme more professional
+8. release on linkedin, and website
 
 ## Boxes
 
