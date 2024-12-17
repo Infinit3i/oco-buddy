@@ -26,16 +26,21 @@ pip install -r requirements.txt
 
 ## TODO
 
+- create proper quality testing
 - load any sessions
 - date the sessions
 - highlight important sections
 - automatic some scripts to work in the background
 - have the emojis work on all systems
-- create proper quality testing
 
 
 
-- Tool to Iterate through tools to use against
-    - hackthebox
-    - vulnhub
-    - vulnyx
+## Boxes
+
+### Vulnyx
+- 
+
+### Vulnhub
+
+
+### Hackthebox
