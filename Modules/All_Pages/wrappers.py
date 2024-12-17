@@ -28,7 +28,7 @@ def header(target_ip, open_ports):
     print(center_text(get_random_tip_with_color()) + "\n")
     print(center_text(f"Target IP: {target_ip}\n"))
     if open_ports:
-        print(center_text(f"Open Ports: {', '.join(open_ports)}\n"))
+        print(center_text(f"Open Ports: {', '.join(map(str, open_ports))}\n"))
     else:
         print(center_text("Open Ports: None\n"))
 
