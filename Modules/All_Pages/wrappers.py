@@ -121,8 +121,7 @@ def display_protocol_menu(target_ip, open_ports, menu_options):
         header(target_ip, open_ports)
         print("\n=== MAIN Menu ===")
         for key, option in menu_options.items():
-            protocol_ports = "/".join(option["ports"])
-            print(f"[{key}] {option['name'].upper()} (Ports: {protocol_ports})")
+            print(f"[{key}] {option['name'].upper()}")
         print("[0] Exit\n")
 
         choice = input("Select a protocol: ").strip()
