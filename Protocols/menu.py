@@ -52,11 +52,6 @@ def protocol_menu(target_ip, detected_ports):
         if any(port in detected_ports for port in value["ports"]):
             matched_protocols[key] = value
 
-    # Include dynamically added protocols if their ports match
-    for name, ports in OPEN_PORTS.items():
-        if any(port in detected_ports for port in ports):
-            matched_protocols[name] = {"name": name}
-
     # Display filtered or all protocols
     if matched_protocols:
         print("\nProtocols with Detected Ports:")
@@ -64,54 +59,3 @@ def protocol_menu(target_ip, detected_ports):
     else:
         print("\nNo detected ports matched. Showing all protocols:")
         display_protocol_menu(target_ip, detected_ports, {key: {"name": value["name"]} for key, value in MENU_OPTIONS.items()})
-
-    # Enter menu loop
-    menu_loop()
-
-# Function to list all protocols and their ports
-def list_all_ports():
-    """
-    Lists all predefined and dynamically added protocols and their ports.
-    """
-    print("\nPredefined Protocols and Ports:")
-    for proto in MENU_OPTIONS.values():
-        print(f"  {proto['name'].upper()}: Ports - {', '.join(proto['ports'])}")
-
-    if OPEN_PORTS:
-        print("\nDynamically Added Protocols and Ports:")
-        for name, ports in OPEN_PORTS.items():
-            print(f"  {name.upper()}: Ports - {', '.join(ports)}")
-    else:
-        print("\nNo dynamically added protocols.")
-
-# Function to add a protocol dynamically
-def add_protocol(name, ports):
-    """
-    Adds a new protocol dynamically.
-    """
-    if name in OPEN_PORTS or any(proto["name"] == name for proto in MENU_OPTIONS.values()):
-        print(f"Protocol '{name}' already exists.")
-    else:
-        OPEN_PORTS[name] = ports
-        print(f"Protocol '{name}' added with ports: {', '.join(ports)}.")
-
-# Menu loop to handle user input
-def menu_loop():
-    while True:
-        command = input("\nEnter a command (list, list ports, add, exit): ").strip().lower()
-
-        if command in ["list", "list ports"]:
-            list_all_ports()
-        elif command.startswith("add"):
-            parts = command.split()
-            if len(parts) >= 3:
-                protocol_name = parts[1]
-                ports = parts[2:]
-                add_protocol(protocol_name, ports)
-            else:
-                print("Invalid add command. Usage: add <protocol> <ports>")
-        elif command == "exit":
-            print("Exiting...")
-            break
-        else:
-            print("Invalid command. Available commands: list, list ports, add, exit.")
