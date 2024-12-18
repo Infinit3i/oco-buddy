@@ -27,13 +27,16 @@ pip install -r requirements.txt
 ## TODO
 
 1. highlight important sections
-2. load any sessions
-3. date the sessions
-4. automatic some scripts to work in the background
-5. have the emojis work on all systems
-6. add 30 boxes
-7. make readme more professional
-8. release on linkedin, and website
+2. add <protocol>
+3. list <protocol>
+
+- load any sessions
+- date the sessions
+- automatic some scripts to work in the background
+- have the emojis work on all systems
+- add 30 boxes
+- make readme more professional
+- release on linkedin, and website
 
 ## Boxes
 
