@@ -4,6 +4,9 @@ import sys
 from datetime import datetime
 import threading
 
+# Define the global SAVED_DIR variable
+SAVED_DIR = "SAVED"
+os.makedirs(SAVED_DIR, exist_ok=True)  # Create the directory if it doesn't exist
 # Global list to store background tasks
 BACKGROUND_TASK = []
 

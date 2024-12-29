@@ -1,13 +1,13 @@
 from Modules.Imports.protocol_imports import *
 
-def robots(target_ip, open_ports):
-    title = "Robots.txt"
-    content = f"wget http://{target_ip}/robots.txt"
-    run_command(title, content, target_ip, open_ports)
-
 def whatweb(target_ip, open_ports):
     title = "WhatWeb"
     content = f"whatweb -a3 http://{target_ip} -v"
+    run_command(title, content, target_ip, open_ports)
+    
+def robots(target_ip, open_ports):
+    title = "Robots.txt"
+    content = f"wget http://{target_ip}/robots.txt"
     run_command(title, content, target_ip, open_ports)
     
 def feroxbuster(target_ip, open_ports):
