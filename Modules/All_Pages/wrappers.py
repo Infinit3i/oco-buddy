@@ -3,16 +3,16 @@ from colorama import Fore, Style
 import inspect
 import importlib
 
-from Assets.ascii_text_prompts import ascii_art, full_ascii_art, infinitei
+from Assets.ascii_text_prompts import ascii_art
 from Modules.All_Pages.clear_screen import clear_screen
 from Modules.All_Pages.random_tip import get_random_tip_with_color
-
-from Modules.All_Pages.center_text import *
-
+from Modules.All_Pages.center_text import center_text
 from Modules.Login.scan import BACKGROUND_TASK
+
 
 def highlight_ports(port, open_ports): # Highlight a port if it is in the list of open ports.
     return f"{Fore.GREEN}{port}{Style.RESET_ALL}" if port in open_ports else f"{port}" 
+
 
 def display_background_task():
     if BACKGROUND_TASK:
@@ -21,6 +21,7 @@ def display_background_task():
             print(f"  - {task}")
     else:
         print("\nBackground Task: None")
+
 
 def header(target_ip, open_ports):
     clear_screen()
@@ -31,6 +32,7 @@ def header(target_ip, open_ports):
         print(center_text(f"Open Ports: {', '.join(map(str, open_ports))}\n"))
     else:
         print(center_text("Open Ports: None\n"))
+
 
 def build_dynamic_submenu(module, target_ip, open_ports):
     # Extract all functions in the original order of definition
@@ -90,6 +92,7 @@ def run_command(title, content, target_ip, open_ports):
     finally:
         input("\nPress Enter to return...")
 
+
 def global_command_handler():
     """
     Allows the user to execute arbitrary shell commands.
@@ -133,6 +136,7 @@ def display_protocol_menu(target_ip, open_ports, menu_options):
             load_and_run_protocol(protocol, target_ip, open_ports)
         else:
             print("Invalid choice. Please try again.")
+
 
 def load_and_run_protocol(protocol, target_ip, open_ports):
     try:
