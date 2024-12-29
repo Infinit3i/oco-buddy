@@ -18,31 +18,8 @@ def ensure_saved_directory():
     SAVED_DIR = "SAVED"  # Define the SAVED directory globally
     os.makedirs(SAVED_DIR, exist_ok=True)  # Create the directory if it doesn't exist
 
-def check_nmap():
-    try:
-        subprocess.run(["nmap", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-    except FileNotFoundError:
-        print("Nmap is not installed on this system.")
-        install_nmap()
-
-def install_nmap():
-    try:
-        if sys.platform.startswith("linux"):
-            print("Attempting to install nmap on Linux...")
-            subprocess.run(["sudo", "apt-get", "update"], check=True)
-            subprocess.run(["sudo", "apt-get", "install", "-y", "nmap"], check=True)
-            print("Nmap installed successfully!")
-        elif sys.platform.startswith("win"):
-            print("Please download and install Nmap manually from: https://nmap.org/download.html")
-        else:
-            print("Unsupported operating system. Please install Nmap manually.")
-            sys.exit(1)
-    except subprocess.CalledProcessError as e:
-        print(f"Error installing Nmap: {e}")
-        sys.exit(1)
 
 def scan_ports(target_ip, box_name):
-    check_nmap()  # Ensure nmap is installed
     ensure_saved_directory()  # Ensure SAVED directory exists
 
     print(f"Scanning {target_ip} for open ports (Fast scan)...")
@@ -78,7 +55,7 @@ def scan_ports(target_ip, box_name):
         return open_ports
     except subprocess.CalledProcessError as e:
         print(f"Error running Nmap: {e.stderr}")
-        sys.exit(1)
+
 
 def detailed_scan(target_ip, box_name):
     current_date = datetime.now().strftime("%Y-%m-%d")
