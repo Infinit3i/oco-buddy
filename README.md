@@ -11,29 +11,28 @@ Offensive Cyber Security Buddy to help with offensive cyber security.
 
 # On Windows
 ```
-.\venv\Scripts\activate
+cd /Install
+./windows_install.ps1
+cd ..
+python3 ctf.py
 ```
 
 
 # On macOS/Linux
 ```
-python3 -m venv oco
-source oco/bin/activate
-pip install -r requirements.txt
+cd /Install
+./linux_install.sh
+cd ..
+python3 ctf.py
 ```
-
-
 
 ## TODO
 
-1. highlight important sections
-2. add <protocol>
-3. list <protocol>
-
+- automatic some scripts to work in the background
+- highlight sections
 - load any sessions
 - date the sessions
-- automatic some scripts to work in the background
-- have the emojis work on all systems
+
 - add 30 boxes
 - make readme more professional
 - release on linkedin, and website
