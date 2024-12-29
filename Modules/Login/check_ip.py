@@ -1,7 +1,6 @@
-import os  # For clearing the screen, if needed
 from Modules.All_Pages.clear_screen import clear_screen
-from Assets.ascii_text_prompts import *
-from Modules.All_Pages.center_text import *
+from Assets.ascii_text_prompts import full_ascii_art, infinitei
+from Modules.All_Pages.center_text import center_text
 
 # Declare TARGET_IP
 TARGET_IP = None
@@ -33,6 +32,7 @@ def get_target_ip():
             return TARGET_IP  # Explicitly return the target IP
         else:
             print("Invalid IP. Please try again.")
+
 
 def retrieve_target_ip():
     return TARGET_IP

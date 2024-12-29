@@ -1,14 +1,10 @@
 import importlib
 import threading
 from Protocols.menu import *
+import inspect
 
 
 def automatic_enumeration(target_ip, open_ports):
-    """
-    Automatically enumerates detected protocols based on open ports in the background.
-    :param target_ip: Target IP address.
-    :param open_ports: List of detected open ports.
-    """
     print("\n=== Automatic Enumeration Started ===")
 
     for protocol, details in MENU_OPTIONS.items():
@@ -26,15 +22,8 @@ def automatic_enumeration(target_ip, open_ports):
             except Exception as ex:
                 print(f"[Auto] An unexpected error occurred: {ex}")
 
-def execute_protocol_functions(module, target_ip, detected_ports):
-    """
-    Executes all functions in a given protocol module in the order they are defined.
-    :param module: The imported protocol module.
-    :param target_ip: Target IP address.
-    :param detected_ports: Ports associated with the detected protocol.
-    """
-    import inspect
 
+def execute_protocol_functions(module, target_ip, detected_ports):
     # Extract functions in the module in the order they are defined
     source = inspect.getsource(module)
     lines = source.splitlines()
@@ -54,6 +43,7 @@ def execute_protocol_functions(module, target_ip, detected_ports):
             func(target_ip, detected_ports)
         except Exception as ex:
             print(f"[Auto] An error occurred while running {func_name}: {ex}")
+
 
 def start_automatic_enumeration(target_ip, open_ports):
     """
