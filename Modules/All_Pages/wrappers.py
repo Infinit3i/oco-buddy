@@ -2,6 +2,7 @@ import subprocess
 from colorama import Fore, Style
 import inspect
 import importlib
+import threading
 
 from Assets.ascii_text_prompts import ascii_art
 from Modules.All_Pages.clear_screen import clear_screen
@@ -14,15 +15,6 @@ def highlight_ports(port, open_ports): # Highlight a port if it is in the list o
     return f"{Fore.GREEN}{port}{Style.RESET_ALL}" if port in open_ports else f"{port}" 
 
 
-def display_background_task():
-    if BACKGROUND_TASK:
-        print("\nBackground Task:")
-        for task in BACKGROUND_TASK:
-            print(f"  - {task}")
-    else:
-        print("\nBackground Task: None")
-
-
 def header(target_ip, open_ports):
     clear_screen()
     print(center_text(ascii_art))  # Display the full ASCII art banner
@@ -32,6 +24,29 @@ def header(target_ip, open_ports):
         print(center_text(f"Open Ports: {', '.join(map(str, open_ports))}\n"))
     else:
         print(center_text("Open Ports: None\n"))
+    if BACKGROUND_TASK:
+        print(center_text("Background Commands:"))
+        for task in BACKGROUND_TASK:
+            print(center_text(f"- {task}"))
+        print()  # Add spacing
+    else:
+        print(center_text("Background Commands: None\n"))
+
+
+def run_background_command(content, task_name):
+    def task():
+        try:
+            subprocess.run(content, shell=True, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except subprocess.CalledProcessError as e:
+            print(f"{Fore.RED}Error executing background task '{task_name}': {e}{Style.RESET_ALL}")
+        finally:
+            # Remove task from BACKGROUND_TASK once done
+            if task_name in BACKGROUND_TASK:
+                BACKGROUND_TASK.remove(task_name)
+    
+    # Add task to BACKGROUND_TASK and run in a thread
+    BACKGROUND_TASK.append(task_name)
+    threading.Thread(target=task, daemon=True).start()
 
 
 def build_dynamic_submenu(module, target_ip, open_ports):
@@ -94,10 +109,6 @@ def run_command(title, content, target_ip, open_ports):
 
 
 def global_command_handler():
-    """
-    Allows the user to execute arbitrary shell commands.
-    Shows both stdout and stderr for the executed commands.
-    """
     print("\nEntering Command Mode (type 'exit' to return to the menu)\n")
     while True:
         command = input(f"{Fore.YELLOW}Command > {Style.RESET_ALL}").strip()

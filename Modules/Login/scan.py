@@ -1,6 +1,5 @@
 import os
 import subprocess
-import sys
 from datetime import datetime
 import threading
 
@@ -9,6 +8,7 @@ SAVED_DIR = "SAVED"
 os.makedirs(SAVED_DIR, exist_ok=True)  # Create the directory if it doesn't exist
 # Global list to store background tasks
 BACKGROUND_TASK = []
+
 
 def ensure_saved_directory():
     """
@@ -62,10 +62,17 @@ def detailed_scan(target_ip, box_name):
     box_path = os.path.join(SAVED_DIR, box_name)
     os.makedirs(box_path, exist_ok=True)
     output_file_base = os.path.join(box_path, f"{target_ip}-{current_date}")
+    task_name = f"Nmap -sVC {target_ip}"
+    
     try:
+        # Run detailed Nmap scan
         subprocess.run(
             ["nmap", "-sVC", target_ip, "-oA", output_file_base], check=True
         )
         print(f"Detailed scan results saved to {output_file_base}.nmap/.xml/.gnmap")
     except subprocess.CalledProcessError as e:
         print(f"Error running detailed Nmap scan: {e}")
+    finally:
+        # Remove task from BACKGROUND_TASK
+        if task_name in BACKGROUND_TASK:
+            BACKGROUND_TASK.remove(task_name)
