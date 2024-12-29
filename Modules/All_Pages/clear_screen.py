@@ -1,6 +1,7 @@
 import os
 import platform
 
+
 def clear_screen():
     # Check the system platform and use the appropriate command
     if platform.system().lower() == "windows":

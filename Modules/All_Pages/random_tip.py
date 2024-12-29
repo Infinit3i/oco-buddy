@@ -145,6 +145,7 @@ JOKES = [
 
 COLORS = [Fore.RED, Fore.GREEN, Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.YELLOW, Fore.WHITE]
 
+
 def get_random_tip_with_color():
     choice = random.choice(TIPS + JOKES)  # Combine TIPS and JOKES
     color = random.choice(COLORS)

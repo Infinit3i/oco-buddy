@@ -11,9 +11,6 @@ BACKGROUND_TASK = []
 
 
 def ensure_saved_directory():
-    """
-    Ensures that the SAVED directory exists.
-    """
     global SAVED_DIR
     SAVED_DIR = "SAVED"  # Define the SAVED directory globally
     os.makedirs(SAVED_DIR, exist_ok=True)  # Create the directory if it doesn't exist
@@ -47,7 +44,6 @@ def scan_ports(target_ip, box_name):
         with open(quick_scan_file, "w") as file:
             file.write(output)
         print(f"Quick scan results saved to {quick_scan_file}")
-        
         # Add detailed Nmap scan to background tasks
         BACKGROUND_TASK.append(f"Nmap -sVC {target_ip}")
         threading.Thread(target=detailed_scan, args=(target_ip, box_name), daemon=True).start()
@@ -63,7 +59,6 @@ def detailed_scan(target_ip, box_name):
     os.makedirs(box_path, exist_ok=True)
     output_file_base = os.path.join(box_path, f"{target_ip}-{current_date}")
     task_name = f"Nmap -sVC {target_ip}"
-    
     try:
         # Run detailed Nmap scan
         subprocess.run(

@@ -1,6 +1,7 @@
 import json
 import os
 
+
 def ensure_directory_exists(directory):
     """
     Ensures that a directory exists. Creates it if not.
@@ -8,6 +9,7 @@ def ensure_directory_exists(directory):
     """
     if not os.path.exists(directory):
         os.makedirs(directory)
+
 
 def save_action_status(file_path, action_status):
     """
@@ -17,6 +19,7 @@ def save_action_status(file_path, action_status):
     """
     with open(file_path, "w") as f:
         json.dump(action_status, f, indent=4)
+
 
 def load_action_status(file_path, default=None):
     """
