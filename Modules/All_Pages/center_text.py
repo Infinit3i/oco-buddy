@@ -1,4 +1,5 @@
-import os  # To use os.get_terminal_size()
+import os
+
 
 def center_text(text):
     terminal_width = os.get_terminal_size().columns
