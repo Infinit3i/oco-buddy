@@ -32,15 +32,15 @@ python3 ctf.py
 - highlight sections
 - load any sessions
 - date the sessions
-
-- password list that i cann select
-- automatic some scripts to work in the background
+- (Modules/Dictionaries/list_dictionaries.py)password list that i can select
 - save known http/https directories to a list file that will parse the info on it and look for <NAME> #.#.# for version info
   - searchsploit <name #.#.#>
   - searchsploit 
   ![alt text](/Assets/Pictures/document_pics/searchsploit.png)
 
 
+
+- automatic some scripts to work in the background
 - make readme more professional
 - release on linkedin, and website
 
