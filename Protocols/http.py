@@ -1,5 +1,7 @@
 from Modules.Imports.protocol_imports import *
-
+import subprocess
+import re
+import webbrowser
 
 def whatweb(target_ip, open_ports):
     title = "WhatWeb"
@@ -35,9 +37,30 @@ def gobuster(target_ip, open_ports):
 def wfuzz(target_ip, open_ports):
     category = "http"
     title = "wfuzz"
-    list = "/usr/share/seclists/Discovery/Web-Content/common.txt"
-    content = f'wfuzz -c -t 200 --hc=404 -H "User-Agent: h4x0r" -w {list} http://{target_ip}/'
-    run_command(title, content, target_ip, open_ports)
+    wordlist = "/usr/share/seclists/Discovery/Web-Content/common.txt"
+    content = 'fuzz -c -t 200 --hc=404 -H "User-Agent: h4x0r" -w {wordlist} http://{target_ip}/FUZZ'
+    
+    try:
+        # Run the wfuzz command and capture output
+        run_command(title, content, target_ip, open_ports)
+        result = subprocess.run(content, shell=True, capture_output=True, text=True, check=True)
+        print(result.stdout)
+
+        # Extract links with status code 200 or 301
+        matches = re.findall(r"http://[^\s]+ \(200\)|http://[^\s]+ \(301\)", result.stdout)
+
+        # Open each matching link in the browser
+        if matches:
+            print("\n[INFO] Found the following links:")
+            for match in matches:
+                url = match.split(" ")[0]  # Extract the URL part before the status code
+                print(f"Opening: {url}")
+                webbrowser.open(url)
+        else:
+            print("[INFO] No links with status code 200 or 301 found.")
+
+    except subprocess.CalledProcessError as e:
+        print(f"Error running wfuzz:\n{e}")
 
 
 def dirb(target_ip, open_ports):
