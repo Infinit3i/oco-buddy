@@ -1,5 +1,6 @@
-from Modules.Imports.all_imports import *
-from Protocols.menu import MENU_OPTIONS, protocol_menu
+from Modules.Login.check_ip import get_target_ip, get_box_name
+from Modules.Login.scan import scan_ports
+from Protocols.menu import protocol_menu
 
 if __name__ == "__main__":
     box_name = get_box_name()
