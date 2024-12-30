@@ -3,7 +3,7 @@ from Modules.Utils.common import global_command_handler
 
 
 def display_footer(actions, target_ip, open_ports):
-    print("[C] Type Commands")
+    print("\n[C] Type Commands")
     print("[0] Back to Main Menu\n")
 
     # Get user choice for submenu

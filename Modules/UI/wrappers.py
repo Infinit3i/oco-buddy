@@ -4,34 +4,9 @@ import inspect
 import importlib
 import threading
 
-from Assets.ascii_text_prompts import ascii_art
-from Modules.UI.clear_screen import clear_screen
-from Modules.UI.random_tip import get_random_tip_with_color
 from Modules.UI.center_text import center_text
 from Modules.Login.scan import BACKGROUND_TASK
-
-
-def highlight_ports(port, open_ports): # Highlight a port if it is in the list of open ports.
-    return f"{Fore.GREEN}{port}{Style.RESET_ALL}" if port in open_ports else f"{port}" 
-
-
-def header(target_ip, open_ports):
-    clear_screen()
-    print(center_text(ascii_art))  # Display the full ASCII art banner
-    print(center_text(get_random_tip_with_color()) + "\n")
-    print(center_text(f"Target IP: {target_ip}\n"))
-    if open_ports:
-        print(center_text(f"Open Ports: {', '.join(map(str, open_ports))}\n"))
-    else:
-        print(center_text("Open Ports: None\n"))
-    if BACKGROUND_TASK:
-        print(center_text("Background Commands:"))
-        for task in BACKGROUND_TASK:
-            print(center_text(f"- {task}"))
-        print()  # Add spacing
-    else:
-        print(center_text("Background Commands: None\n"))
-
+from Modules.UI.header import header
 
 def run_background_command(content, task_name):
     def task():
