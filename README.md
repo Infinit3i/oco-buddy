@@ -27,20 +27,24 @@ python3 ctf.py
 ```
 
 ## TODO
+- add 30 boxes
 
-- automatic some scripts to work in the background
 - highlight sections
 - load any sessions
 - date the sessions
 
-- add 30 boxes
+- password list that i cann select
+- automatic some scripts to work in the background
+
+
+
 - make readme more professional
 - release on linkedin, and website
 
 ## Boxes
 
 ### Vulnyx
-- 
+- Agent
 
 ### Vulnhub
 
