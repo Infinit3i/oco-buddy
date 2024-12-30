@@ -20,6 +20,7 @@ def feroxbuster(target_ip, open_ports):
     
     
 def skipfish(target_ip, open_ports):
+    category = "http"
     title = "Skipfish"
     content = f"skipfish -k 00:06:00 -o doctorScan/ http://{target_ip}/"
     run_command(title, content, target_ip, open_ports)
@@ -32,8 +33,10 @@ def gobuster(target_ip, open_ports):
 
 
 def wfuzz(target_ip, open_ports):
+    category = "http"
     title = "wfuzz"
-    content = f'wfuzz -c -t 200 --hc=404 -H "User-Agent: h4x0r" -w /usr/share/seclists/Discovery/Web-Content/common.txt http://{target_ip}/'
+    list = "/usr/share/seclists/Discovery/Web-Content/common.txt"
+    content = f'wfuzz -c -t 200 --hc=404 -H "User-Agent: h4x0r" -w {list} http://{target_ip}/'
     run_command(title, content, target_ip, open_ports)
 
 
