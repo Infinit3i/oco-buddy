@@ -106,7 +106,23 @@ def run_command(title, content, target_ip, open_ports):
         print(f"An unexpected error occurred: {ex}")
     finally:
         input("\nPress Enter to return...")
-
+      
+""" i want to have this replace the current run function so i can have all of the protocol files dictionaries
+def execute_protocol_command(protocol_commands, command_key, target_ip, open_ports):
+    if command_key in protocol_commands:
+        command = protocol_commands[command_key]
+        category = command["category"]
+        title = command["title"]
+        content = command["content"](target_ip)  # Generate the content dynamically
+        
+        # Check if the ports match before executing
+        if any(port in open_ports for port in category["ports"]):
+            run_command(category["protocol"], title, content, target_ip, open_ports)
+        else:
+            print(f"{Fore.RED}Open ports do not match the required ports for {title}.{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.RED}Command '{command_key}' not found.{Style.RESET_ALL}")
+"""
 
 def global_command_handler():
     print("\nEntering Command Mode (type 'exit' to return to the menu)\n")
