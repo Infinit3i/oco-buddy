@@ -124,6 +124,7 @@ def execute_protocol_command(protocol_commands, command_key, target_ip, open_por
         print(f"{Fore.RED}Command '{command_key}' not found.{Style.RESET_ALL}")
 """
 
+
 def global_command_handler():
     print("\nEntering Command Mode (type 'exit' to return to the menu)\n")
     while True:
