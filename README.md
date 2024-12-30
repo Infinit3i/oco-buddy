@@ -27,7 +27,8 @@ python3 ctf.py
 ```
 
 ## TODO
-- add 30 boxes
+- add 28 boxes
+- verify all
 
 - highlight sections
 - load any sessions
@@ -48,6 +49,7 @@ python3 ctf.py
 
 ### Vulnyx
 - Agent
+- Doctor
 
 ### Vulnhub
 

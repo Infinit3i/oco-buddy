@@ -14,5 +14,7 @@ HTTP Notes:
   - find /etc -perm -2
   - grep -Inri passw /etc/* 2>/dev/null
   - https://github.com/rebootuser/LinEnum
+    - CVE-2019–13272
+         openssl passwd
 """
     run_command(title, content, target_ip, open_ports)
