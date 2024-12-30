@@ -1,6 +1,6 @@
-from Modules.All_Pages.clear_screen import clear_screen
+from Modules.UI.clear_screen import clear_screen
 from Assets.ascii_text_prompts import full_ascii_art, infinitei
-from Modules.All_Pages.center_text import center_text
+from Modules.UI.center_text import center_text
 
 # Declare TARGET_IP
 TARGET_IP = None

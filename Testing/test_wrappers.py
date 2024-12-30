@@ -7,7 +7,7 @@ from unittest.mock import patch, MagicMock, call
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
 # Import functions from wrappers
-from Modules.All_Pages.wrappers import (
+from Modules.UI.wrappers import (
     highlight_ports,
     display_background_task,
     header,

@@ -1,30 +1,36 @@
 import importlib
 import threading
-from Protocols.menu import *
+import logging
 import inspect
+from Protocols.menu import MENU_OPTIONS
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 def automatic_enumeration(target_ip, open_ports):
-    print("\n=== Automatic Enumeration Started ===")
+    logging.info("=== Automatic Enumeration Started ===")
 
     for protocol, details in MENU_OPTIONS.items():
         protocol_ports = details["ports"]
         detected_ports = [port for port in open_ports if port in protocol_ports]
 
         if detected_ports:
-            print(f"\n[Auto] Detected Protocol: {details['name'].upper()} on Ports: {', '.join(detected_ports)}")
+            logging.info(f"[Auto] Detected Protocol: {details['name'].upper()} on Ports: {', '.join(detected_ports)}")
             try:
                 module = importlib.import_module(f"Protocols.{details['module']}")
-                print(f"[Auto] Enumerating {details['name'].upper()}...")
+                logging.info(f"[Auto] Enumerating {details['name'].upper()}...")
                 execute_protocol_functions(module, target_ip, detected_ports)
             except ModuleNotFoundError:
-                print(f"[Auto] Error: Protocol module '{details['module']}' not found.")
+                logging.error(f"[Auto] Error: Protocol module '{details['module']}' not found.")
             except Exception as ex:
-                print(f"[Auto] An unexpected error occurred: {ex}")
+                logging.exception(f"[Auto] An unexpected error occurred: {ex}")
 
 
 def execute_protocol_functions(module, target_ip, detected_ports):
-    # Extract functions in the module in the order they are defined
+    """
+    Execute all functions in the imported module in the order they are defined.
+    """
     source = inspect.getsource(module)
     lines = source.splitlines()
     actions = []
@@ -38,11 +44,11 @@ def execute_protocol_functions(module, target_ip, detected_ports):
 
     # Execute each function in order
     for func_name, func in actions:
-        print(f"[Auto] Running {func_name.replace('_', ' ').title()}...")
+        logging.info(f"[Auto] Running {func_name.replace('_', ' ').title()}...")
         try:
             func(target_ip, detected_ports)
         except Exception as ex:
-            print(f"[Auto] An error occurred while running {func_name}: {ex}")
+            logging.exception(f"[Auto] An error occurred while running {func_name}: {ex}")
 
 
 def start_automatic_enumeration(target_ip, open_ports):

@@ -5,9 +5,9 @@ import importlib
 import threading
 
 from Assets.ascii_text_prompts import ascii_art
-from Modules.All_Pages.clear_screen import clear_screen
-from Modules.All_Pages.random_tip import get_random_tip_with_color
-from Modules.All_Pages.center_text import center_text
+from Modules.UI.clear_screen import clear_screen
+from Modules.UI.random_tip import get_random_tip_with_color
+from Modules.UI.center_text import center_text
 from Modules.Login.scan import BACKGROUND_TASK
 
 

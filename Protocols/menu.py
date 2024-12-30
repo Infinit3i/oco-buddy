@@ -1,4 +1,4 @@
-from Modules.All_Pages.wrappers import display_protocol_menu
+from Modules.UI.wrappers import display_protocol_menu
 
 # Global variable to store dynamically added protocols
 OPEN_PORTS = {}
