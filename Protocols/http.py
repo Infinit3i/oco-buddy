@@ -1,7 +1,19 @@
 from Modules.Imports.protocol_imports import *
-import subprocess
 import re
 import webbrowser
+
+
+def notes(target_ip, open_ports):
+    title = "Notes"
+    content = f"""
+HTTP Notes:
+  - Check robots.txt
+  - Check for hidden directories
+  - Check for hidden files
+  - Check versions
+"""
+    run_command(title, content, target_ip, open_ports)
+
 
 def whatweb(target_ip, open_ports):
     title = "WhatWeb"

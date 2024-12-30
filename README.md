@@ -35,7 +35,7 @@ python3 ctf.py
 
 - password list that i cann select
 - automatic some scripts to work in the background
-
+- save known http/https directories to a list file that will parse the info on it and look for <NAME> #.#.# for version info
 
 
 - make readme more professional
