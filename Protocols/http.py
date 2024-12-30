@@ -38,7 +38,7 @@ def wfuzz(target_ip, open_ports):
     category = "http"
     title = "wfuzz"
     wordlist = "/usr/share/seclists/Discovery/Web-Content/common.txt"
-    content = 'fuzz -c -t 200 --hc=404 -H "User-Agent: h4x0r" -w {wordlist} http://{target_ip}/FUZZ'
+    content = 'wfuzz -c -t 200 --hc=404 -H "User-Agent: h4x0r" -w {wordlist} http://{target_ip}/FUZZ'
     
     try:
         # Run the wfuzz command and capture output
